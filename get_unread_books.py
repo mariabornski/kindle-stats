@@ -26,6 +26,8 @@ import argparse
 # Non-standard modules, need to acquire and set up correctly.
 import lector
 
+DEFAULT_UNREAD_PERCENTAGE = 10
+
 def get_unread_books(amazon_username, amazon_password, unread_percentage):
     unread_books = []
     try:
@@ -46,9 +48,20 @@ def get_unread_books(amazon_username, amazon_password, unread_percentage):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-u", "--amazon_username", help="Your Amazon username for the kindle account you want data for")
-    parser.add_argument("-p", "--amazon_password", help="Your Amazon password for the kindl account you want data for")
+    parser.add_argument("-p", "--amazon_password", help="Your Amazon password for the kindle account you want data for")
     parser.add_argument("--unread_percentage", type=int, help="The max unread percentage you want to know about.  Books with a higher unread percentage won't be listed")
     args = parser.parse_args()
+
+    unread_percentage = DEFAULT_UNREAD_PERCENTAGE
+    if not args.amazon_username or not args.amazon_password:
+        print("Username and password are required!")
+        parser.print_help()
+        exit(1)
+
+    if args.unread_percentage:
+        unread_percentage = args.unread_percentage
+    else:
+        print("Unread percentage unspecified, defaulting to %s percent" % unread_percentage)
 
     uread_books = get_unread_books(args.amazon_username, args.amazon_password, args.unread_percentage)
     print(unread_books)
