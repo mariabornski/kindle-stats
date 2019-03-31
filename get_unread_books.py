@@ -53,3 +53,5 @@ def main():
     uread_books = get_unread_books(args.amazon_username, args.amazon_password, args.unread_percentage)
     print(unread_books)
 
+if __name__ == "__main__":
+    main()
