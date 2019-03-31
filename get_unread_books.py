@@ -31,7 +31,7 @@ def get_unread_books(amazon_username, amazon_password, unread_percentage):
     try:
         api = lector.KindleCloudReaderAPI(amazon_username, amazon_password)
     except Exception as e:
-        print e
+        print(e)
         exit(1)
     my_library = api.get_library_metadata()
     for book in my_library:
@@ -51,5 +51,5 @@ def main():
     args = parser.parse_args()
 
     uread_books = get_unread_books(args.amazon_username, args.amazon_password, args.unread_percentage)
-    print unread_books
+    print(unread_books)
 
